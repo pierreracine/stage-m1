@@ -9,42 +9,38 @@
 #Output : files renamed
 
 import sys
+import fnmatch
 import os
+import shutil
 
 a1=sys.argv[1]                 #first atom's symbol
 a2=sys.argv[2]                 #second atom's symbol
-N=sys.argv[3]                  #number of excited states studied
-m=sys.argv[4]                  #spin multiplicity
-b=sys.argv[5]                  #orbital basis set
-f=sys.argv[6]                  #functional
+b=sys.argv[3]                  #orbital basis set
+f=sys.argv[4]                  #functional
 
 #creation of the repertory
 
-def named (a1,a2,b,f):
+def name_rep (a1,a2,b,f):
         if a1==a2:
                 named=a1+'2/'+b+'/'+f+'/'
         else :
                 named=a1+a2+'/'+b+'/'+f+'/'
         return named
 
-named=named(a1,a2,b,f)
+rep=name_rep(a1,a2,b,f)
 
-os.makedirs(named)
+os.makedirs(rep)
 
-#name of the input and log files for gaussian :
+#Removing some files
 
-def name (a1,a2,b,f):
-        if a1==a2 :
-                name=a1+'2_'+b+'_'+f
-        else :
-                name=a1+a2+'_'+b+'_'+f
-        return name
+for file in os.listdir("."):
+	for k in ["Gau*", "scan_*", "opt*", "*.chk", "en*", "sym*", "*.inp"]:
+		if fnmatch.fnmatch(file,k):
+			os.remove(file)
 
-nameinp=name(a1,a2,b,f)+'.inp'
-namelog=name(a1,a2,b,f)+'.log'
+#Storage of the remaining files
 
-#edition of the title's files
-
-os.rename('inp.inp',named+nameinp)
-os.rename('inp.log',named+namelog)
-
+for file in os.listdir("."):
+	for k in ["*.png", "errors", "*.log"]:
+		if fnmatch.fnmatch(file,k):
+			shutil.move(file,rep)

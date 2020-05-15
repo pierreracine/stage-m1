@@ -20,8 +20,8 @@ module load python/python-3.7.0-gcc-8.2.0
 
 #please, fill the following informations to run the script
 
-a1=H               #symbol of the first atom, Ex : H, Li
-a2=H               #symbol of the second atom
+a1=N               #symbol of the first atom, Ex : H, Li
+a2=N               #symbol of the second atom
 b=aug-cc-pvdz      #orbital basis set, Ex : aug-cc-pvdz
 f=B3LYP            #functional, Ex : B3LYP
 
@@ -43,5 +43,5 @@ g16 vert_trans_TD.inp				#Vertical transition calculations
 python3 exploitlog.py                      #script to extract energies and optimal geometries
 python3 errors.py			#script to write the file listing all errors
 python3 graph.py $a1 $a2  $b $f                           #sript to plot the graphs of energies for 2N+1 states
-#python3 store.py $a1 $a2  $b $f           #script to rename and store all files
+python3 store.py $a1 $a2  $b $f           #script to rename and store all files
 
