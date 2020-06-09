@@ -54,7 +54,7 @@ if __name__=="__main__":
 		plt.xlabel('Interatomic distance (Angstrom)')
 		plt.ylabel('Energy (Hartree)')
 		plt.xlim=(dist_start,dist_start+gap*(step+1))
-		plt.legend(loc='lower right')
+		plt.legend(loc='upper right')
 		plt.title(w.multiplicity(m)[1]+' excited states of '+name+'\n'+'('+b+' and '+f+')')
 		plt.savefig(name+'_'+b+'_'+f+'_'+m)
 		plt.clf()

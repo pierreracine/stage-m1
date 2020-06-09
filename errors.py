@@ -29,12 +29,10 @@ def edition_error(afile):
 		with open ("errors","a") as tofill:
 			tofill.write(afile+'	'+normalornot+"\n")
 
-
-edition_error("scan_DFT_s.log")
-edition_error("scan_DFT_t.log")
 edition_error("optGS_DFT.log")
-for k in range(3):
-	edition_error("optES_TD_s"+str(k+1)+".log")
-	edition_error("optES_TD_t"+str(k+1)+".log")
-edition_error("vert_trans_TD.log")
+for m in ["s", "t"]:
+	edition_error("scan_DFT_"+m+".log")
+	edition_error("SP_DFT_"+m+".log")
+	for k in range(1,6):
+		edition_error("optES_TD_"+m+str(k)+".log")
 

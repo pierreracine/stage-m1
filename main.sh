@@ -38,24 +38,27 @@ cat informations | while read line;do
 	dist_start=${ADDR[4]}
 	gap=${ADDR[5]}
 	step=${ADDR[6]}
-	python3 inp.py $a1 $a2  $b $f $dist_start $gap $step      #execution of the script writing the input files for Gaussian
+	python3 inp.py $a1 $a2  $b $f $dist_start $gap $step		#Execution of the script writing the input files for Gaussian
 
-	g16 optGS_DFT.inp
-	g16 scan_DFT_s.inp				#SCan for the ground state
+	g16 optGS_DFT.inp						#Optimization of ground state
+	g16 scan_DFT_s.inp						#Scan calculations
 	g16 scan_DFT_t.inp 
-	g16 SP_DFT_s.inp
-	g16 SP_DFT_t.inp
 
-	for k in `seq 1 5`;				#OPtimization for excited states
+	for m in s t
 	do
-		g16 optES_TD_s$k.inp
-		g16 optES_TD_t$k.inp
+		g16 SP_DFT_$m.inp
+
+		for k in `seq 1 5`;					#Optimization for excited states
+		do
+			g16 optES_TD_s$k.inp
+			g16 optES_TD_t$k.inp
+		done
 	done
 
-	python3 errors.py			          #script to write the file listing all errors
-	python3 exploitlog.py $dist_start $gap $step                             #script to extract energies and optimal geometries
-	python3 graph.py $a1 $a2  $b $f $dist_start $gap $step      #sript to plot the graphs of energies for 2N+1 states
-#	python3 store.py $a1 $a2  $b $f                   #script to rename and store all files
-#	rm *.inp Gau* scan_* opt* *.chk en* sym*
+	python3 errors.py						#Script to write the file listing all errors
+	python3 exploitlog.py $dist_start $gap $step			#Script to extract energies and optimal geometries
+	python3 graph.py $a1 $a2  $b $f $dist_start $gap $step		#Sript to plot the graphs of energies for 2N+1 states
+#	python3 store.py $a1 $a2  $b $f					#Script to rename and store files of interest
+#	rm *.inp Gau* scan_* opt* *.chk en* sym*			#Deletion of the last files
 
 done

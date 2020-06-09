@@ -1,17 +1,16 @@
-#!/usr/bin/python3
+#! /usr/bin/env python3
 # -*-coding: utf-8-*
 
 
 #The goal of this script is to name the files with a title of the form
-# molecule_orbitals_functional and store them into a dedicated directory
+#molecule_orbitals_functional and store them into a dedicated directory.
 
-#Inputs : symbol for each atom, number of excited states, spin multiplicity, orbital basis set and functional
-#Output : files renamed
 
-import sys
+#Standart modules import :
 import fnmatch
 import os
 import shutil
+import sys
 
 a1=sys.argv[1]                 #first atom's symbol
 a2=sys.argv[2]                 #second atom's symbol
@@ -31,16 +30,10 @@ rep=name_rep(a1,a2,b,f)
 
 os.makedirs(rep)
 
-#Removing some files
 
-for file in os.listdir("."):
-	for k in ["Gau*", "scan_*", "opt*", "*.chk", "en*", "sym*", "*.inp"]:
-		if fnmatch.fnmatch(file,k):
-			os.remove(file)
+#Storage of the files of interest
 
-#Storage of the remaining files
-
-for file in os.listdir("."):
-	for k in ["*.png", "errors", "*.log"]:
-		if fnmatch.fnmatch(file,k):
-			shutil.move(file,rep)
+for afile in os.listdir("."):
+	for k in ["sy*", "*.inp", "en*", "*.png", "errors", "*.log", "DFT_ES_summary"]:
+		if fnmatch.fnmatch(afile,k):
+			shutil.move(afile,rep)
